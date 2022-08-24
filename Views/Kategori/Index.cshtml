@@ -1,0 +1,51 @@
+﻿@using SENLStokTakip.Models
+@model List<Kategori>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<br />
+<br />
+<a href="/Kategori/Ekle" class="btn btn-primary">Ekle</a>
+<br />
+<br />
+<table id="tbl1" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ad</th>
+            <th>Açıklama</th>
+            @if (User.IsInRole("A"))
+            {
+                <th>Sil</th>
+                <th>Düzenle</th>
+            }
+
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Ad</td>
+            <td>@item.Aciklama</td>
+            @if (User.IsInRole("A"))
+            {
+                <td>
+                    @Html.ActionLink("Sil", "Sil", new { id = item.Id }, new { @class = "btn btn-danger", onclick = "return confirm('Silmek İstiyor musunuz?')" })
+                </td>
+                <td><a href="/Kategori/Guncelle/@item.Id" class="btn btn-success">Düzenle</a></td>
+            }
+
+        </tr>
+    }
+</table>
+
+
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+
+<script>
+    $("#tbl1").DataTable();
+</script>
+

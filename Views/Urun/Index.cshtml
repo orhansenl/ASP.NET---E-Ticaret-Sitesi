@@ -1,0 +1,70 @@
+﻿@using SENLStokTakip.Models
+@model List<Urun>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (User.IsInRole("A"))
+{
+<a href="/Urun/Ekle" class="btn btn-primary">Ürün Ekle</a>
+
+}
+
+<br />
+<br />
+<table id="tbl1" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Resim</th>
+            <th>Ad</th>
+            <th>Açıklama</th>
+            <th>Fiyat</th>
+            <th>Stok</th>
+            <th>Kategori</th>
+            @if (User.IsInRole("A"))
+            {
+                <th>Sil</th>
+                <th>Düzenle</th>
+            }
+
+            @if (User.IsInRole("U"))
+            {
+                <th>Sepete Ekle</th>
+
+            }
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td><img src="~/Content/Image/@item.Resim" width="80" height="80" /></td>
+            <td>@item.Ad</td>
+            <td>@item.Aciklama</td>
+            <td>@item.Fiyat ₺</td>
+            <td>@item.Stok</td>
+            <td>@item.Kategori.Ad</td>
+            @if (User.IsInRole("A"))
+            {
+                <td>
+                    @Html.ActionLink("Sil", "Sil", new { id = item.Id }, new { @class = "btn btn-danger", onclick = "return confirm('Silmek İstiyor musunuz?')" })
+                </td>
+                <td><a href="/Urun/Guncelle/@item.Id" class="btn btn-success">Düzenle</a></td>
+            }
+            @if (User.IsInRole("U"))
+            {
+                <td><a href="/Sepet/SepeteEkle/@item.Id" class="btn btn-success">Sepete Ekle</a></td>
+            }
+
+        </tr>
+    }
+</table>
+
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+
+<script>
+    $("#tbl1").DataTable();
+</script>

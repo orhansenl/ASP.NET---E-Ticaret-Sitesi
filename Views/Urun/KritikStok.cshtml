@@ -1,0 +1,43 @@
+﻿@using SENLStokTakip.Models
+@model List<Urun>
+@{
+    ViewBag.Title = "KritikStok";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link href="~/SiteImg/a.ico" rel="shortcut icon" type="image/x-icon" />
+
+<table id="tbl1" class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Ürün Bilgisi</th>
+            <th>Stok</th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        if (item.Stok<50)
+        {
+            <tr style="background-color:red">
+                <td>@item.Ad</td>
+                <td>@item.Stok</td>
+            </tr>
+        }
+        if (item.Stok==50)
+        {
+            <tr style="background-color:yellow">
+                <td>@item.Ad</td>
+                <td>@item.Stok</td>
+            </tr>
+        }
+
+    }
+</table>
+
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+
+<script>
+    $("#tbl1").DataTable();
+</script>
